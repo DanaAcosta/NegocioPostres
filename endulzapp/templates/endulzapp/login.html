@@ -1,0 +1,21 @@
+<!doctype html>
+{% extends "endulzapp/base.html" %}
+
+<html>
+    <head>
+        {% block title %}Inicio de sesion{% endblock %} 
+    </head>
+
+    <body>
+        {% block mainBodyIndex %}
+        <div class="mx-auto" style="width: 200px;">
+                <form method="POST" class="from-group">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <p>No tienes cuenta, crea una <a href="/register">aqui</a></p>
+                    <button type="submit" class="btn btn-success">Ingresar</button>
+                </form>
+        </div>
+        {% endblock %}
+    </body>
+</html>

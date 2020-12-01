@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% extends "endulzapp/base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if "/mostrarProducto/" in request.get_full_path %}
+        Lista de productos
+    {% endif %}
+{% endblock %}
+
+{% block mainBodyIndex %}
+<div class="col-lg-9">
+            <div class="row">
+                {% for postre in shelf %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            {{ postre.image.url}}
+                            <img src="{{ postre.imagen.url }}" class="card-img-top">
+
+                            <div class="card-body">
+                            <h4 class="card-title">
+                                {{ postre.nombre }}
+                            </h4>
+                            <h5>${{ postre.costo_por_porcion }}</h5>
+                            <p class="card-text">{{ postre.descripcion }}</p>
+                            </div>
+                            <div class="card-footer">
+                                <center>
+                                    <a class="btn btn-dark" href="update/{{ postre.id_producto }}" role="button">Actualizar</a>
+                                    <a class="btn btn-dark" href="delete/{{ postre.id_producto }}" role="button">Borrar</a>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+</div>
+{% endblock %}

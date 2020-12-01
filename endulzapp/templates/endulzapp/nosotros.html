@@ -1,0 +1,97 @@
+<!doctype html>
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/"> Endulzapp &#127856 </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Inicio
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/nosotros">Nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Productos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contacto">Contacto</a>
+            </li>
+  
+            {% if user.is_authenticated %}
+              {% if user.is_staff %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="/meterPostre">Subir producto</a>
+                  </li>
+  
+                  <li class="nav-item">
+                      <a class="nav-link" href="/editarPostre">Editar producto</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                      <a class="nav-link" href="/borrarPostre">Borrar producto</a>
+                  </li>
+  
+                  <li class="nav-item">
+                      <a class="nav-link" href="/logout">Cerrar sesión</a>
+                  </li>
+              {% else %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="/logout">Cerrar sesión</a>
+                  </li>
+  
+                  <li class="nav-item">
+                      <a class="nav-link" href="/carrito" > <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIHN0eWxlPSJmaWxsOiNFMTc0NEU7IiBkPSJNMTE2LjU3NSwxMTAuNzM4djMzLjRoNzguOTcxbDguMjg0LDY2LjI3NWgtNjIuOTEzdjMzLjRoNjcuMDg4bDguMjg0LDY2LjI3NWgtNDkuMjc3djMzLjRoMjg2Ljc5OQ0KCUw1MTIsMTEwLjczN0gxMTYuNTc1VjExMC43Mzh6IE0zMjAuNDI4LDIxMC40MTJ2LTY2LjI3NWg1Ny44MjRsLTguMjg0LDY2LjI3NUgzMjAuNDI4eiBNMzY1Ljc5MywyNDMuODEybC04LjI4NCw2Ni4yNzVoLTM3LjA4DQoJdi02Ni4yNzVIMzY1Ljc5M3ogTTQxMS45MTIsMTQ0LjEzN2g1Ny4zMWwtMTYuNTY4LDY2LjI3NWgtNDkuMDI2TDQxMS45MTIsMTQ0LjEzN3ogTTIyOS4yMDYsMTQ0LjEzN2g1Ny44MjR2NjYuMjc1SDIzNy40OQ0KCUwyMjkuMjA2LDE0NC4xMzd6IE0yNDEuNjY1LDI0My44MTJoNDUuMzY1djY2LjI3NWgtMzcuMDhMMjQxLjY2NSwyNDMuODEyeiBNMzkxLjE2OSwzMTAuMDg4bDguMjg0LTY2LjI3NWg0NC44NWwtMTYuNTY4LDY2LjI3NQ0KCUgzOTEuMTY5eiIvPg0KPHBvbHlnb24gc3R5bGU9ImZpbGw6I0NBQ0FDRDsiIHBvaW50cz0iNDAyLjM1MSw0MjQuMTExIDE3Mi45NTUsNDI0LjExMSA4Mi44MDQsNjMuNTEzIDAsNjMuNTEzIDAsMzAuMTEzIDEwOC44ODIsMzAuMTEzIA0KCTE5OS4wMzEsMzkwLjcxMSA0MDIuMzUxLDM5MC43MTEgIi8+DQo8cGF0aCBzdHlsZT0iZmlsbDojNUI1QjVGOyIgZD0iTTE3OC4zMTUsNDgxLjg4N2MtMjUuMTM3LDAtNDUuNTg3LTIwLjQ1MS00NS41ODctNDUuNTg4YzAtMjUuMTM3LDIwLjQ1MS00NS41ODcsNDUuNTg3LTQ1LjU4Nw0KCXM0NS41ODcsMjAuNDUxLDQ1LjU4Nyw0NS41ODdDMjIzLjkwMiw0NjEuNDM2LDIwMy40NTIsNDgxLjg4NywxNzguMzE1LDQ4MS44ODd6Ii8+DQo8cGF0aCBzdHlsZT0iZmlsbDojQ0FDQUNEOyIgZD0iTTE3OC4zMTUsNDUxLjA3OWMtOC4xNSwwLTE0Ljc4LTYuNjMxLTE0Ljc4LTE0Ljc4YzAtOC4xNSw2LjYzMS0xNC43OCwxNC43OC0xNC43OA0KCWM4LjE1LDAsMTQuNzgsNi42MzEsMTQuNzgsMTQuNzhDMTkzLjA5NSw0NDQuNDQ5LDE4Ni40NjUsNDUxLjA3OSwxNzguMzE1LDQ1MS4wNzl6Ii8+DQo8cGF0aCBzdHlsZT0iZmlsbDojNUI1QjVGOyIgZD0iTTQwMC41MzMsNDgxLjg4N2MtMjUuMTM3LDAtNDUuNTg3LTIwLjQ1MS00NS41ODctNDUuNTg4YzAtMjUuMTM3LDIwLjQ1MS00NS41ODcsNDUuNTg3LTQ1LjU4Nw0KCWMyNS4xMzcsMCw0NS41ODcsMjAuNDUxLDQ1LjU4Nyw0NS41ODdDNDQ2LjEyLDQ2MS40MzYsNDI1LjY3LDQ4MS44ODcsNDAwLjUzMyw0ODEuODg3eiIvPg0KPHBhdGggc3R5bGU9ImZpbGw6I0NBQ0FDRDsiIGQ9Ik00MDAuNTMzLDQ1MS4wNzljLTguMTUsMC0xNC43OC02LjYzMS0xNC43OC0xNC43OGMwLTguMTUsNi42MzEtMTQuNzgsMTQuNzgtMTQuNzgNCgljOC4xNSwwLDE0Ljc4LDYuNjMxLDE0Ljc4LDE0Ljc4QzQxNS4zMTIsNDQ0LjQ0OSw0MDguNjgzLDQ1MS4wNzksNDAwLjUzMyw0NTEuMDc5eiIvPg0KPHBhdGggc3R5bGU9ImZpbGw6I0RENTMyMzsiIGQ9Ik01MTIsMTEwLjczOEgzMDMuNzExdjIzMi43NWgxNTAuMTAxTDUxMiwxMTAuNzM4eiBNMzU3LjUwOSwzMTAuMDg4aC0zNy4wOHYtNjYuMjc1aDQ1LjM2NQ0KCUwzNTcuNTA5LDMxMC4wODh6IE0zNjkuOTY4LDIxMC40MTJoLTQ5LjUzOXYtNjYuMjc1aDU3LjgyNEwzNjkuOTY4LDIxMC40MTJ6IE00MjcuNzM1LDMxMC4wODhoLTM2LjU2Nmw4LjI4NC02Ni4yNzVoNDQuODUNCglMNDI3LjczNSwzMTAuMDg4eiBNNDAzLjYyOCwyMTAuNDEybDguMjg0LTY2LjI3NWg1Ny4zMWwtMTYuNTY4LDY2LjI3NUg0MDMuNjI4eiIvPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=" width="30" height="30" /></a>
+                  </li>
+              {% endif %}
+  
+  
+            {% else %}
+              <li class="nav-item">
+                  <a class="nav-link" href="/login">Iniciar sesión</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/register">Registrarse</a>
+              </li>
+  
+              <li class="nav-item">
+                  <a class="nav-link" href="/carrito" > <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxwYXRoIHN0eWxlPSJmaWxsOiNFMTc0NEU7IiBkPSJNMTE2LjU3NSwxMTAuNzM4djMzLjRoNzguOTcxbDguMjg0LDY2LjI3NWgtNjIuOTEzdjMzLjRoNjcuMDg4bDguMjg0LDY2LjI3NWgtNDkuMjc3djMzLjRoMjg2Ljc5OQ0KCUw1MTIsMTEwLjczN0gxMTYuNTc1VjExMC43Mzh6IE0zMjAuNDI4LDIxMC40MTJ2LTY2LjI3NWg1Ny44MjRsLTguMjg0LDY2LjI3NUgzMjAuNDI4eiBNMzY1Ljc5MywyNDMuODEybC04LjI4NCw2Ni4yNzVoLTM3LjA4DQoJdi02Ni4yNzVIMzY1Ljc5M3ogTTQxMS45MTIsMTQ0LjEzN2g1Ny4zMWwtMTYuNTY4LDY2LjI3NWgtNDkuMDI2TDQxMS45MTIsMTQ0LjEzN3ogTTIyOS4yMDYsMTQ0LjEzN2g1Ny44MjR2NjYuMjc1SDIzNy40OQ0KCUwyMjkuMjA2LDE0NC4xMzd6IE0yNDEuNjY1LDI0My44MTJoNDUuMzY1djY2LjI3NWgtMzcuMDhMMjQxLjY2NSwyNDMuODEyeiBNMzkxLjE2OSwzMTAuMDg4bDguMjg0LTY2LjI3NWg0NC44NWwtMTYuNTY4LDY2LjI3NQ0KCUgzOTEuMTY5eiIvPg0KPHBvbHlnb24gc3R5bGU9ImZpbGw6I0NBQ0FDRDsiIHBvaW50cz0iNDAyLjM1MSw0MjQuMTExIDE3Mi45NTUsNDI0LjExMSA4Mi44MDQsNjMuNTEzIDAsNjMuNTEzIDAsMzAuMTEzIDEwOC44ODIsMzAuMTEzIA0KCTE5OS4wMzEsMzkwLjcxMSA0MDIuMzUxLDM5MC43MTEgIi8+DQo8cGF0aCBzdHlsZT0iZmlsbDojNUI1QjVGOyIgZD0iTTE3OC4zMTUsNDgxLjg4N2MtMjUuMTM3LDAtNDUuNTg3LTIwLjQ1MS00NS41ODctNDUuNTg4YzAtMjUuMTM3LDIwLjQ1MS00NS41ODcsNDUuNTg3LTQ1LjU4Nw0KCXM0NS41ODcsMjAuNDUxLDQ1LjU4Nyw0NS41ODdDMjIzLjkwMiw0NjEuNDM2LDIwMy40NTIsNDgxLjg4NywxNzguMzE1LDQ4MS44ODd6Ii8+DQo8cGF0aCBzdHlsZT0iZmlsbDojQ0FDQUNEOyIgZD0iTTE3OC4zMTUsNDUxLjA3OWMtOC4xNSwwLTE0Ljc4LTYuNjMxLTE0Ljc4LTE0Ljc4YzAtOC4xNSw2LjYzMS0xNC43OCwxNC43OC0xNC43OA0KCWM4LjE1LDAsMTQuNzgsNi42MzEsMTQuNzgsMTQuNzhDMTkzLjA5NSw0NDQuNDQ5LDE4Ni40NjUsNDUxLjA3OSwxNzguMzE1LDQ1MS4wNzl6Ii8+DQo8cGF0aCBzdHlsZT0iZmlsbDojNUI1QjVGOyIgZD0iTTQwMC41MzMsNDgxLjg4N2MtMjUuMTM3LDAtNDUuNTg3LTIwLjQ1MS00NS41ODctNDUuNTg4YzAtMjUuMTM3LDIwLjQ1MS00NS41ODcsNDUuNTg3LTQ1LjU4Nw0KCWMyNS4xMzcsMCw0NS41ODcsMjAuNDUxLDQ1LjU4Nyw0NS41ODdDNDQ2LjEyLDQ2MS40MzYsNDI1LjY3LDQ4MS44ODcsNDAwLjUzMyw0ODEuODg3eiIvPg0KPHBhdGggc3R5bGU9ImZpbGw6I0NBQ0FDRDsiIGQ9Ik00MDAuNTMzLDQ1MS4wNzljLTguMTUsMC0xNC43OC02LjYzMS0xNC43OC0xNC43OGMwLTguMTUsNi42MzEtMTQuNzgsMTQuNzgtMTQuNzgNCgljOC4xNSwwLDE0Ljc4LDYuNjMxLDE0Ljc4LDE0Ljc4QzQxNS4zMTIsNDQ0LjQ0OSw0MDguNjgzLDQ1MS4wNzksNDAwLjUzMyw0NTEuMDc5eiIvPg0KPHBhdGggc3R5bGU9ImZpbGw6I0RENTMyMzsiIGQ9Ik01MTIsMTEwLjczOEgzMDMuNzExdjIzMi43NWgxNTAuMTAxTDUxMiwxMTAuNzM4eiBNMzU3LjUwOSwzMTAuMDg4aC0zNy4wOHYtNjYuMjc1aDQ1LjM2NQ0KCUwzNTcuNTA5LDMxMC4wODh6IE0zNjkuOTY4LDIxMC40MTJoLTQ5LjUzOXYtNjYuMjc1aDU3LjgyNEwzNjkuOTY4LDIxMC40MTJ6IE00MjcuNzM1LDMxMC4wODhoLTM2LjU2Nmw4LjI4NC02Ni4yNzVoNDQuODUNCglMNDI3LjczNSwzMTAuMDg4eiBNNDAzLjYyOCwyMTAuNDEybDguMjg0LTY2LjI3NWg1Ny4zMWwtMTYuNTY4LDY2LjI3NUg0MDMuNjI4eiIvPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPC9zdmc+DQo=" width="30" height="30" /></a>
+                </li>
+            {% endif %}
+  
+  
+  
+          </ul>
+        </div>
+      </div>
+    </nav>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">¿Quienes somos?</h1>
+    </div>
+</section>
+
+<div align="center"><img class="img" src="https://static.wixstatic.com/media/459eca_14a71baeec664ff086ca9c72a5a3f42d~mv2.png/v1/fill/w_278,h_280,al_c,lg_1,q_85/logo.webp"></div>
+<p class="text-center">Ambitioni dedisse scripsisse iudicaretur. Cras mattis iudicium purus sit amet fermentum. Donec sed odio operae, eu vulputate felis rhoncus. Praeterea iter est quasdam res quas ex communi. At nos hinc posthac, sitientis piros Afros. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Cras mattis iudicium purus sit amet fermentum.</p>
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white"> &copy; EndulzaTuPaseoApp 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+

@@ -1,0 +1,26 @@
+<!doctype html>
+{% extends "endulzapp/base.html" %}
+
+<html>
+    <head>
+        {% block title %}Registro{% endblock %} 
+    </head>
+
+<body>
+    {% block mainBodyIndex %}
+    <div class="card text" style="width: 52rem;">
+        <div class="card-header">
+          Registrese
+        </div>
+        <div class="card-body">
+            <form method="post" action="/register/">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit", name="save">Registrarse</button>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
+
