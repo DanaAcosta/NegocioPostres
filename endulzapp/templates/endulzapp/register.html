@@ -1,26 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
+
 {% extends "endulzapp/base.html" %}
+{% load static %}
 
-<html>
-    <head>
-        {% block title %}Registro{% endblock %} 
-    </head>
+{% block title %}
+    {% if "/registrarEmpleado/" in request.get_full_path %}
+        Registrar empleado
+    {% endif %}
 
-<body>
-    {% block mainBodyIndex %}
-    <div class="card text" style="width: 52rem;">
-        <div class="card-header">
-          Registrese
-        </div>
-        <div class="card-body">
-            <form method="post" action="/register/">
+    {% if "/register/" in request.get_full_path  %}
+        Registrar usuario 
+    {% endif %}
+{% endblock %}
+
+{% block mainBodyIndex %}
+    <div class="col-lg-9">
+        <center>
+            <h1 class="display-3">
+                {% if "/register/" in request.get_full_path  %}
+                    Registrar usuario Endulzaapp
+                {% endif %}
+
+                {% if "/registrarEmpleado/" in request.get_full_path %}
+                    Registrar empleado Endulzapp
+                {% endif %}
+            </h1>
+            <form method="POST" enctype="multipart/form-data" action="/register/">
                 {% csrf_token %}
-                {{form.as_p}}
-                <button type="submit", name="save">Registrarse</button>
-            </form>
-        </div>
-    </div>
-    {% endblock %}
-</body>
-</html>
+                <table class="w-50 table table-light">
+                    {% for field in form %}
+                        <tr>
+                            <th>{{ field.label }}</th>
+                            <td>{{ field }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                {% if "/register/" in request.get_full_path  %}
+                    <button type="submit" class="btn btn-lg btn-primary">
+                        Registrarse
+                    </button>
+                {% endif %}
 
+                {% if "/registrarEmpleado/" in request.get_full_path %}
+                    <button type="submit" class="btn btn-lg btn-primary">
+                        Registrar Empleado
+                    </button>
+                {% endif %}
+            </form>
+        </center>
+    </div>
+{% endblock %}

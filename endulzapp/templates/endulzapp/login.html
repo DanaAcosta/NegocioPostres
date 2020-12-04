@@ -1,21 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
+
 {% extends "endulzapp/base.html" %}
+{% load static %}
 
-<html>
-    <head>
-        {% block title %}Inicio de sesion{% endblock %} 
-    </head>
+{% block title %}
+    Inicio sesion
+{% endblock %}
 
-    <body>
-        {% block mainBodyIndex %}
-        <div class="mx-auto" style="width: 200px;">
-                <form method="POST" class="from-group">
-                    {% csrf_token %}
-                    {{form.as_p}}
-                    <p>No tienes cuenta, crea una <a href="/register">aqui</a></p>
-                    <button type="submit" class="btn btn-success">Ingresar</button>
-                </form>
-        </div>
-        {% endblock %}
-    </body>
-</html>
+{% block mainBodyIndex %}
+    <div class="col-lg-9">
+        <center>
+            <h1 class="display-3">
+                Incio de sesion
+            </h1>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table class="w-50 table table-light">
+                    {% for field in form %}
+                        <tr>
+                            <th>{{ field.label }}</th>
+                            <td>{{ field }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <button type="submit" class="btn btn-lg btn-success">
+                    Iniciar sesion
+                </button>
+            </form>
+        </center>
+    </div>
+{% endblock %}

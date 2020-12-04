@@ -1,3 +1,5 @@
+import os
+
 """
 Django settings for sitioPostres project.
 
@@ -37,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'endulzapp.apps.EndulzappConfig'
+    'endulzapp.apps.EndulzappConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -77,7 +80,7 @@ WSGI_APPLICATION = 'sitioPostres.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'negocio_postres',
+        'NAME': 'negocio_postres3',
         'USER' : 'usuarioproyectopostres@servidorproyectopostres',
         'PASSWORD' : 'negociopostres123',
         'HOST' : 'servidorproyectopostres.postgres.database.azure.com',
@@ -122,4 +125,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+CART_SESSION_ID = 'cart'
+
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static-files')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

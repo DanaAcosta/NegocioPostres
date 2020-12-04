@@ -15,9 +15,42 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .settings import DEBUG, STATIC_URL, STATIC_ROOT, MEDIA_URL, MEDIA_ROOT
 from endulzapp import views as v
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', v.index, name='index'),
     path('register/', v.register, name="register"),
+    #path('carrito/', v.carrito, name="carrito"),
+    path('login/', v.login_view, name="login_view"),
+    path('logout/', v.logout_view, name="logout_view"),
+    
+    path('registrarEmpleado/', v.registrarEmpleado, name="registrarEmpleado"),
+    
+    path('meterPostre/', v.upload, name="upload"),
+    path('mostrarProductos/editarPostre/<int:postre_id>', v.update_postre),
+    path('mostrarProductos/borrarPostre/<int:postre_id>', v.delete_postre),
+    path('mostrarProductos/', v.listadoProductos, name="listadoProductos"),
+    
+    path('contacto/', v.contacto, name="contacto"),
+    path('terminarCompra/', v.terminarCompra, name="terminarCompra"),
+    path('', include("django.contrib.auth.urls")),
+
+
+    path('agregarCarrito/<int:postre_id>', v.agregarAlCarrito),
+    path('carrito/borrarCarrito/<int:postre_id>', v.borrarDelCarrito),
+    path('carrito/', v.carrito, name="carrito"),
+    
+    path('categoria/<int:id_categoria>', v.organizarPorCategoria)
+
+    #path('cart/', include('cart.urls', namespace='cart')), 
+	#path('', include('sitioPostres.urls', namespace='postres')),
+
+
+    #path('producto/', v.product_list, name="producto"),
 ]
+
+if DEBUG:
+    urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)

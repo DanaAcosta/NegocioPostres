@@ -1,3 +1,68 @@
+<!DOCTYPE html>
 {% extends "endulzapp/base.html" %}
+{% load static %}
 
-{% block title %}Carrito de compras{% endblock %}
+{% block title %}
+    {% if "/carrito/" in request.get_full_path %}
+        Carrito de compras
+    {% endif %}
+{% endblock %}
+
+{% block mainBodyIndex %}
+
+
+<div class="col-lg-9">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"> </th>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Disponible</th>
+                            <th scope="col" class="text-center">Cantidad</th>
+                            <th scope="col" class="text-right">Precio</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% with name=100 %} 
+                        {% for postre, cantidad in postresEnCarrito %}
+                        <tr>
+                            {{ postre.image.url}}
+                            <td><img src="{{ postre.imagen.url }}" width="45" height="45"/> </td>
+                            <td style="text-align: center; vertical-align: middle;">{{ postre.nombre }}</td>
+                            <td style="text-align: center; vertical-align: middle;">Disponible</td>
+                            <td style="text-align: center; vertical-align: middle;">{{cantidad}}</td>
+ 
+                            <td style="vertical-align: middle;" class="text-right">${% widthratio  cantidad 1 postre.costo_por_porcion %}</td>
+                            <td style="vertical-align: middle;" class="text-right" ><a class="btn btn-danger" href="borrarCarrito/{{ postre.id_producto }}" role="button"><img src="data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjUxMnB0IiB2aWV3Qm94PSItNDMgMCA1MTIgNTEyIiB3aWR0aD0iNTEycHQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTI2OS42NDQ1MzEgODguOTc2NTYyaC0xMTMuMDYyNWMtOC4yODUxNTYgMC0xNS02LjcxNDg0My0xNS0xNXYtNDUuOTMzNTkzYzAtMTUuNDYwOTM4IDEyLjU3MDMxMy0yOC4wNDI5NjkgMjguMDIzNDM4LTI4LjA0Mjk2OWg4Ny4wMTE3MTljMTUuNDUzMTI0IDAgMjguMDI3MzQzIDEyLjU4MjAzMSAyOC4wMjczNDMgMjguMDQyOTY5djQ1LjkzMzU5M2MwIDguMjg1MTU3LTYuNzE4NzUgMTUtMTUgMTV6bS05OC4wNjI1LTMwaDgzLjA2MjV2LTI4Ljk3NjU2MmgtODMuMDYyNXptODUuMDM1MTU3LTI4Ljk3NjU2MmguMDA3ODEyem0wIDAiIGZpbGw9IiNiZWMzZDIiLz48cGF0aCBkPSJtMzgxLjY5MTQwNiAxMjIuNjY0MDYyYy0yLjgzOTg0NC0zLjA3ODEyNC02LjgzNTkzNy00LjgyODEyNC0xMS4wMjM0MzctNC44MjgxMjRoLTMxNS4xMDkzNzVjLTQuMTg3NSAwLTguMTg3NSAxLjc1LTExLjAyNzM0NCA0LjgyODEyNC0yLjgzOTg0NCAzLjA3ODEyNi00LjI2MTcxOSA3LjIwMzEyNi0zLjkyNTc4MSAxMS4zNzg5MDdsMjcuMTI1IDMzNS4zOTQ1MzFjMS45Mjk2ODcgMjMuODY3MTg4IDIyLjE4MzU5MyA0Mi41NjI1IDQ2LjEwNTQ2OSA0Mi41NjI1aDE5OC41NTA3ODFjMjMuOTI1NzgxIDAgNDQuMTc1NzgxLTE4LjY5NTMxMiA0Ni4xMDU0NjktNDIuNTYyNWwyNy4xMjUtMzM1LjM5NDUzMWMuMzM5ODQzLTQuMTc1NzgxLTEuMDg1OTM4LTguMzAwNzgxLTMuOTI1NzgyLTExLjM3ODkwN3ptMCAwIiBmaWxsPSIjYmVjM2QyIi8+PHBhdGggZD0ibTU1LjU1ODU5NCAxMTcuODM1OTM4Yy00LjE4NzUgMC04LjE4NzUgMS43NS0xMS4wMjczNDQgNC44MjgxMjQtMi44Mzk4NDQgMy4wNzgxMjYtNC4yNjE3MTkgNy4yMDMxMjYtMy45MjU3ODEgMTEuMzc4OTA3bDI3LjEyNSAzMzUuMzk0NTMxYzEuOTI5Njg3IDIzLjg2NzE4OCAyMi4xODM1OTMgNDIuNTYyNSA0Ni4xMDU0NjkgNDIuNTYyNWg5OS4yNzczNDN2LTM5NC4xNjQwNjJ6bTAgMCIgZmlsbD0iI2RjZTFlYiIvPjxwYXRoIGQ9Im00MjUuNDUzMTI1IDEyOC4wODU5MzgtMTkuNjM2NzE5LTU4Ljg1NTQ2OWMtMi4wNDI5NjgtNi4xMjUtNy43NzM0MzctMTAuMjUzOTA3LTE0LjIyNjU2Mi0xMC4yNTM5MDdoLTM1Ni45NTcwMzJjLTYuNDUzMTI0IDAtMTIuMTg3NSA0LjEyODkwNy0xNC4yMjY1NjIgMTAuMjUzOTA3bC0xOS42MzY3MTkgNTguODU1NDY5Yy0xLjUyMzQzNyA0LjU3NDIxOC0uNzU3ODEyMiA5LjYwNTQ2OCAyLjA2MjUgMTMuNTE1NjI0IDIuODE2NDA3IDMuOTE0MDYzIDcuMzQ3NjU3IDYuMjMwNDY5IDEyLjE2Nzk2OSA2LjIzMDQ2OWgzOTYuMjIyNjU2YzQuODI0MjE5IDAgOS4zNTE1NjMtMi4zMTY0MDYgMTIuMTcxODc1LTYuMjMwNDY5IDIuODE2NDA3LTMuOTEwMTU2IDMuNTgyMDMxLTguOTQxNDA2IDIuMDU4NTk0LTEzLjUxNTYyNHptMCAwIiBmaWxsPSIjZGNlMWViIi8+PHBhdGggZD0ibTI4Ny4zMzIwMzEgNDY1Ljk3NjU2MmMtLjI2MTcxOSAwLS41MjM0MzctLjAwMzkwNi0uNzkyOTY5LS4wMTk1MzEtOC4yNjk1MzEtLjQyOTY4Ny0xNC42Mjg5MDYtNy40ODgyODEtMTQuMTk5MjE4LTE1Ljc2MTcxOWwxNC4wODU5MzctMjcwLjM5ODQzN2MuNDI5Njg4LTguMjczNDM3IDcuNDcyNjU3LTE0LjY0MDYyNSAxNS43NTc4MTMtMTQuMTk5MjE5IDguMjczNDM3LjQyOTY4OCAxNC42Mjg5MDYgNy40ODgyODIgMTQuMTk5MjE4IDE1Ljc2MTcxOWwtMTQuMDgyMDMxIDI3MC4zOTg0MzdjLS40MTc5NjkgOC4wMDc4MTMtNy4wNDI5NjkgMTQuMjE4NzUtMTQuOTY4NzUgMTQuMjE4NzV6bTAgMCIgZmlsbD0iIzkxOTZhYSIvPjxwYXRoIGQ9Im0xMzkuNTU0Njg4IDQ2NS45NzY1NjJjLTcuOTEwMTU3IDAtMTQuNTI3MzQ0LTYuMTg3NS0xNC45NjA5MzgtMTQuMTgzNTkzbC0xNC43NTM5MDYtMjcwLjM5ODQzOGMtLjQ0OTIxOS04LjI3MzQzNyA1Ljg5MDYyNS0xNS4zNDM3NSAxNC4xNjAxNTYtMTUuNzkyOTY5IDguMjY1NjI1LS40NTMxMjQgMTUuMzQ3NjU2IDUuODg2NzE5IDE1Ljc5Njg3NSAxNC4xNjAxNTdsMTQuNzUgMjcwLjM5ODQzN2MuNDUzMTI1IDguMjczNDM4LTUuODg2NzE5IDE1LjM0Mzc1LTE0LjE2MDE1NiAxNS43OTI5NjktLjI3NzM0NC4wMTU2MjUtLjU1NDY4OC4wMjM0MzctLjgzMjAzMS4wMjM0Mzd6bTAgMCIgZmlsbD0iI2JlYzNkMiIvPjxwYXRoIGQ9Im0yMTMuMjc3MzQ0IDQ2NS45NzY1NjJjLTguMjgxMjUgMC0xNS02LjcxNDg0My0xNS0xNXYtMjcwLjM5ODQzN2MwLTguMjg1MTU2IDYuNzE4NzUtMTUgMTUtMTUgOC4yODUxNTYgMCAxNSA2LjcxNDg0NCAxNSAxNXYyNzAuMzk4NDM3YzAgOC4yODUxNTctNi43MTQ4NDQgMTUtMTUgMTV6bTAgMCIgZmlsbD0iIzkxOTZhYSIvPjxwYXRoIGQ9Im0xOTguMjc3MzQ0IDE4MC41NzgxMjV2MjcwLjM5ODQzN2MwIDguMjI2NTYzIDYuNjI4OTA2IDE0LjkwMjM0NCAxNC44MzU5MzcgMTQuOTkyMTg4di0zMDAuMzgyODEyYy04LjIwNzAzMS4wODk4NDMtMTQuODM1OTM3IDYuNzYxNzE4LTE0LjgzNTkzNyAxNC45OTIxODd6bTAgMCIgZmlsbD0iI2JlYzNkMiIvPjxwYXRoIGQ9Im0xNzEuNTgyMDMxIDU4Ljk3NjU2MnYtMjguOTc2NTYyaDQxLjUzMTI1di0zMGgtNDMuNTA3ODEyYy0xNS40NTMxMjUgMC0yOC4wMjM0MzggMTIuNTgyMDMxLTI4LjAyMzQzOCAyOC4wNDI5Njl2NDUuOTMzNTkzYzAgOC4yODUxNTcgNi43MTQ4NDQgMTUgMTUgMTVoNTYuNTMxMjV2LTMwem0wIDAiIGZpbGw9IiNkY2UxZWIiLz48cGF0aCBkPSJtMzYuMjg5MDYyIDU4Ljk3NjU2MmMtNi40NTMxMjQgMC0xMi4xODc1IDQuMTI4OTA3LTE0LjIzMDQ2OCAxMC4yNTM5MDdsLTE5LjYzMjgxMyA1OC44NTU0NjljLTEuNTIzNDM3IDQuNTc0MjE4LS43NTc4MTIgOS42MDU0NjggMi4wNjI1IDEzLjUxNTYyNCAyLjgxNjQwNyAzLjkxNDA2MyA3LjM0NzY1NyA2LjIzMDQ2OSAxMi4xNjc5NjkgNi4yMzA0NjloMTk4LjEwOTM3NXYtODguODU1NDY5em0wIDAiIGZpbGw9IiNmMmY2ZmMiLz48L3N2Zz4=" width="25" height="25"/></a></td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total</strong></td>
+                            <td class="text-right"><strong>${{totalCuenta}}</strong></td>
+                        </tr>
+                        {% endwith %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col mb-2">
+            <div class="row">
+                <div class="col-sm-12  col-md-6">
+                    <a class="btn btn-dark" href="/" role="button">Continuar comprando</a>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <a class="btn btn-success" href="/terminarCompra" role="button">Finalizar compra</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
